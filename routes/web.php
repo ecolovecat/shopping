@@ -25,14 +25,17 @@ Route::get('home', function () {
 
 
 Route::prefix('categories')->group(function () {
-    Route::get('/create',[
-        'as'=> 'categories.create',
-        'uses' => 'App\Http\Controllers\CategoryController@create'
-    ]);
+
     Route::get('/',[
         'as'=> 'categories.index',
         'uses' => 'App\Http\Controllers\CategoryController@index'
     ]);
+
+    Route::get('/create',[
+        'as'=> 'categories.create',
+        'uses' => 'App\Http\Controllers\CategoryController@create'
+    ]);
+
     Route::post('/store',[
         'as'=> 'categories.store',
         'uses' => 'App\Http\Controllers\CategoryController@store'
@@ -43,10 +46,35 @@ Route::prefix('categories')->group(function () {
         'uses' => 'App\Http\Controllers\CategoryController@edit'
     ]);
 
+    Route::post('/update/{id}',[
+        'as'=> 'categories.update',
+        'uses' => 'App\Http\Controllers\CategoryController@update'
+    ]);
+
     Route::get('/delete/{id}',[
         'as'=> 'categories.delete',
         'uses' => 'App\Http\Controllers\CategoryController@delete'
     ]);
 });
+
+Route::prefix('menus')->group(function () {
+
+    Route::get('/',[
+        'as'=> 'menus.index',
+        'uses' => 'App\Http\Controllers\MenuController@index'
+    ]);
+
+
+    Route::get('/create',[
+        'as'=> 'menus.create',
+        'uses' => 'App\Http\Controllers\MenuController@create'
+    ]);
+
+    Route::post('/store',[
+        'as'=> 'menus.store',
+        'uses' => 'App\Http\Controllers\MenuController@store'
+    ]);
+});
+
 
 

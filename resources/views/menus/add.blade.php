@@ -10,7 +10,7 @@
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    @include('patials.content-header', ['name'=>'category', 'key'=>'Add'])
+    @include('patials.content-header', ['name'=>'menu', 'key'=>'Add'])
     <!-- /.content-header -->
 
     <!-- Main content -->
@@ -18,17 +18,17 @@
       <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-            <form action="{{route('categories.store')}}" method="post">
+            <form action="{{route('menus.store')}}" method="post">
                 @csrf
             <div class="form-group">
-                <label>Tên danh mục</label>
-                <input type="text" class="form-control"placeholder="Nhập tên danh mục" name="name">
+                <label>Tên Menu</label>
+                <input type="text" class="form-control"placeholder="Nhập tên Menu" name="name">
             </div>
             <div class="form-group">
-                <label>Chọn danh mục cha</label>
+                <label>Chọn Menu cha</label>
                 <select class="form-control" name="parent_id">
-                <option value="0">Chọn danh mục cha</option>
-                     {!! $htmlOption !!}
+                <option value="0">Chọn Menu cha</option>
+                     {!! $optionSelect !!}
                 </select>
             </div>
 

@@ -5,6 +5,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Components\Recusive;
 use Illuminate\Support\Str;
+use function Symfony\Component\Translation\t;
 
 class CategoryController extends Controller
 {
@@ -15,9 +16,8 @@ class CategoryController extends Controller
     }
     //
     public function create() {
-        $data = $this->category->all();
-        $recusive = new Recusive($data);
-        $htmlOption = $recusive->categoryRecusive();
+
+        $htmlOption = $this->getCategory($parentId ='');
 
          return view("category.add", compact('htmlOption'));
     }
@@ -38,11 +38,32 @@ class CategoryController extends Controller
         return redirect()->route('categories.index');
     }
 
+    public function getCategory($parentId) {
+        $data = $this->category->all();
+        $recusive = new Recusive($data);
+        $htmlOption = $recusive->categoryRecusive($parentId);
+        return $htmlOption;
+    }
+
     public function edit($id) {
+        $category = $this->category->find($id);
+        $htmlOption = $this->getCategory($category->parent_id);
+
+        return view('category.edit', compact('category', 'htmlOption'));
+    }
+
+    public function update($id, Request $request) {
+        $this->category->find($id)->update([
+            'name' => $request->name,
+            'parent_id' => $request->parent_id,
+            'slug'=> str_slug($request->name)
+        ]);
+        return redirect()->route('categories.index');
 
     }
 
     public function delete($id) {
-
+        $this->category->find($id)->delete();
+        return redirect()->route('categories.index');
     }
 }
